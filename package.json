@@ -15,6 +15,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mongoose": "^5.10.17",
+    "winston": "^3.3.3",
     "yup": "^0.31.0"
   },
   "devDependencies": {
