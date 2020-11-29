@@ -2,15 +2,16 @@ const mongoose =  require("mongoose");
 
  //PERSON SCHEMA
  const PersonSchema = new mongoose.Schema({
- 	name:{
+ 	director:{
  		type:String,
  		required:true,
 		minlength:3,
 		maxlength:50
  	},
- 	age:{
- 		type:Number,
+ 	actor:{
+ 		type:Array,
  		required:true,
+ 		minlength:1
  	}
  });
 

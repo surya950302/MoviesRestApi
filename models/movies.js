@@ -4,27 +4,71 @@ const yup = require('yup');
 
 //Movie Schema
 const MovieSchema = new mongoose.Schema({
-	name:{
+	title:{
 		type:String,
 		required:true,
 		minlength:3,
 		maxlength:50
 	},
-	director: Person.schema,
-	genre:{
+	tagline:{
 		type:String,
 		required:true,
 		minlength:3,
+		maxlength:50
+	},
+	popularity:{
+		type:Number,
+		required:true,
+	},
+	runtime:{
+		type:Number,
+		required:true,
+	},
+	rating:{
+		type:Number,
+		required:true,
+	},
+	overview:{
+		type:String,
+		required:true,
+		minlength:10,
+	},
+	adult:{
+		type:Boolean,
+		required:true
+	},
+	language:{
+		type:String,
+		required:true
+	},
+	posterpath:{
+		type:String,
+		required:true
+	},
+	genre:{
+		type:Array,
+		required:true,
+		minlength:1,
 		maxlength:20
-	}
+	},
+	credits:Person.schema
 });
 
 const validateMovie = movie =>{
 	const schema = yup.object().shape({
-		movieName:yup.string().required().min(3).max(50),
-		directorName:yup.string().required().min(3).max(50),
-		directorAge:yup.number().required(),
-		genre:yup.string().required().min(3).max(20)
+		title:yup.string().required().min(3).max(50),
+		tagline:yup.string().required().min(3).max(50),
+		popularity:yup.number().required(),
+		runtime:yup.number().required(),
+		rating:yup.number().required(),
+		overview:yup.string().required().min(10),
+		adult:yup.boolean().required(),
+		language:yup.string().required(),
+		posterpath:yup.string().required(),
+		genre:yup.array().required().min(1),
+		director:yup.string().required().min(3).max(30),
+		actor:yup.array().required().min(1)
+
 	});
 
 	return schema
