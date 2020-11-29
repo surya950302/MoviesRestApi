@@ -16,12 +16,13 @@ router.post('/',async (req,res) =>{
 		overview:req.body.overview,
 		adult:req.body.adult,
 		language:req.body.language,
-		posterpath:req.body.posterpath,
+		poster_path:req.body.poster_path,
 		genre:req.body.genre,
 		credits:{
 			director:req.body.director,
 			actor:req.body.actor
-		}
+		},
+		release_year:req.body.release_year
 	});
 
 	movie.save().then(movie => {
@@ -45,12 +46,13 @@ router.post('/bulk',async (req,res) =>{
 			overview:req.body[i].overview,
 			adult:req.body[i].adult,
 			language:req.body[i].language,
-			posterpath:req.body[i].posterpath,
+			poster_path:req.body[i].poster_path,
 			genre:req.body[i].genre,
 			credits:{
 				director:req.body[i].director,
 				actor:req.body[i].actor
-			}
+			},
+			release_year:req.body[i].release_year
 		});
 		movie.save().then(movie => {
 			responseBody.push(movie)
@@ -99,7 +101,8 @@ router.put('/:id', async (req,res) =>{
 		credits:{
 			director:req.body.director,
 			actor:req.body.actor
-		}
+		},
+		release_year:req.body.release_year
 	},
 	{ new:true});
 	if(!movie) res.status(404).send("Movie not Found");

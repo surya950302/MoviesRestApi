@@ -41,7 +41,7 @@ const MovieSchema = new mongoose.Schema({
 		type:String,
 		required:true
 	},
-	posterpath:{
+	poster_path:{
 		type:String,
 		required:true
 	},
@@ -51,7 +51,12 @@ const MovieSchema = new mongoose.Schema({
 		minlength:1,
 		maxlength:20
 	},
-	credits:Person.schema
+	credits:Person.schema,
+	release_year:{
+		type:String,
+		required:true,
+		minlength:4
+	}
 });
 
 const validateMovie = movie =>{
@@ -64,10 +69,11 @@ const validateMovie = movie =>{
 		overview:yup.string().required().min(10),
 		adult:yup.boolean().required(),
 		language:yup.string().required(),
-		posterpath:yup.string().required(),
+		poster_path:yup.string().required(),
 		genre:yup.array().required().min(1),
 		director:yup.string().required().min(3).max(30),
-		actor:yup.array().required().min(1)
+		actor:yup.array().required().min(1),
+		release_year:yup.string().required().min(4)
 
 	});
 
