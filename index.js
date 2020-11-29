@@ -8,8 +8,8 @@ const winston = require('winston');
 const PORT = process.env.PORT || 3000;
 
 //middlewares
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.json({limit: '50mb', extended:true}));
+app.use(express.urlencoded({limit: '50mb', extended:true}));
 
 //create a logger
 const logger = winston.createLogger({
