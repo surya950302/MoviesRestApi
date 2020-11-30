@@ -35,34 +35,38 @@ router.post('/',async (req,res) =>{
 router.post('/bulk',async (req,res) =>{
 	let responseBody = [];
 	let error = "";
-	for (let i = 0; i < req.body.length; i++) {
-		error = await ValidateMovie(req.body[i]);
-		let movie = new Movie({
-			title:req.body[i].title,
-			tagline:req.body[i].tagline,
-			popularity:req.body[i].popularity,
-			runtime:req.body[i].runtime,
-			rating:req.body[i].rating,
-			overview:req.body[i].overview,
-			adult:req.body[i].adult,
-			language:req.body[i].language,
-			poster_path:req.body[i].poster_path,
-			genre:req.body[i].genre,
-			credits:{
-				director:req.body[i].director,
-				actor:req.body[i].actor
-			},
-			release_year:req.body[i].release_year
-		});
-		movie.save().then(movie => {
-			responseBody.push(movie)
-		}).catch(error =>{
-			res.status(500).send(error);
-		}).then(function () {
-			if (i === req.body.length -1) {
-				res.send(responseBody)
-			}
-		});
+	for(let i = 0; i < req.body.length; i+=10)
+	{
+		for (let j = i; (j < i+10 && j < req.body.length); j++) {
+			error = await ValidateMovie(req.body[j]);
+			let movie = new Movie({
+				title:req.body[j].title,
+				tagline:req.body[j].tagline,
+				popularity:req.body[j].popularity,
+				runtime:req.body[j].runtime,
+				rating:req.body[j].rating,
+				overview:req.body[j].overview,
+				adult:req.body[j].adult,
+				language:req.body[j].language,
+				poster_path:req.body[j].poster_path,
+				genre:req.body[j].genre,
+				credits:{
+					director:req.body[j].director,
+					actor:req.body[j].actor
+				},
+				release_year:req.body[j].release_year
+			});
+			movie.save().then(movie => {
+				responseBody.push(movie)
+			}).catch(error =>{
+				res.status(500).send(error);
+			}).then(function () {
+				if (j === req.body.length -1) {
+					res.send(responseBody)
+				}
+			});
+		}
+
 	}
 	if(error.message) {
 		res.status(400).send(error.message);
